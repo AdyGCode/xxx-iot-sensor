@@ -31,9 +31,12 @@ or similar, will need to be created, or installed from the required suppliers.
 
 This project requires the following package(s):
 
-* `psutils` at least version 5.8.0
-* `piview` at least version 2.0.3
-* `paho-mqtt` at least version 1.5.1
+| Package | Purpose | Recommended Version |
+|------------------|-----------------------------------|----------------|
+| `psutils`  | system utilities | v5.8.0 or later |
+| `piview`  | Raspberry Pi Information package | v2.0.3 or later |
+| `paho-mqtt`  | Python MQTT package  | v1.5.1 or later |
+ 
 
 Remaining packages are Python 'built-ins'.
 

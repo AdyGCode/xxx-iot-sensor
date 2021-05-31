@@ -1,26 +1,24 @@
-'''
-Project:    xxx-iot-sensor
-Filename:   sensor-tph.py
-Location:   ./
-Author:     STUDENT NAME <STUDENT TAFE EMAIL ADDRESS>
-Created:    28/05/21
-Purpose:
-    This file provides the following features, methods and associated
-    supporting code:
-
-    TODO: STUDENT TO DESCRIBE THE PURPOSE OF THIS FILE
-
-Requirements:
-    An MQTT Server to act as a 'broker' to accept messages and pass onto
-    subscribers to the message topic(s).
-    Python 3.6 or later
-
-Required Packages:
-    This project requires the following Python Packages to be installed:
-        piview
-        paho-mqtt
-
-'''
+# Project:    xxx-iot-sensor
+# Filename:   sensor-tph.py
+# Location:   ./
+# Author:     STUDENT NAME <STUDENT TAFE EMAIL ADDRESS>
+# Created:    28/05/21
+# Purpose:
+#     This file provides the following features, methods and associated
+#     supporting code:
+#
+#     TODO: STUDENT TO DESCRIBE THE PURPOSE OF THIS FILE
+#
+# Requirements:
+#     An MQTT Server to act as a 'broker' to accept messages and pass onto
+#     subscribers to the message topic(s).
+#     Python 3.6 or later
+#
+# Required Packages:
+#     This project requires the following Python Packages to be installed:
+#         piview
+#         paho-mqtt
+#
 
 
 def main():
