@@ -63,14 +63,16 @@ def main():
             #  required details for the Pi using the piview package for
             #  each of the following:
             #       boot_time
-            # sensor_ram = Storage.ram()
-            #       ram
-            #       storage
-            #       hw_i2c
-            # hw_i2c = Hardware.i2c()
-            #       hw_bt
-            #       hw_camera
-            #       hw_spi
+            #       sensor_ram = Storage.ram()
+            #           ram_total
+            #           ram_free
+            #           storage
+            #           storage_total
+            #           storage_free
+            #       hw_i2c = Hardware.i2c()
+            #           hw_bt
+            #           hw_camera
+            #           hw_spi
 
             # Create the data payload to send as the message to the MQTT server
             # TODO: Remember to replace the 'UNKNOWN', 'False' etc with the
@@ -92,6 +94,7 @@ def main():
             })
             client.publish(topic, data)
         else:
+            # TODO: Add error code detail display (error codes 1-5)
             print("Bad connection Returned code=", rc)
 
     # Create MQTT Client connection and callback hooks
