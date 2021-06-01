@@ -108,6 +108,7 @@ def on_connect(client, userdata, flags, rc):
         })
         client.publish(topic, data)
     else:
+        # TODO: Add error code detail display (error codes 1-5)
         print("Bad connection Returned code=", rc)
 
 
@@ -129,10 +130,12 @@ while True:
     cpu_temperature = 'Sensor CPU Temperature',
     # TODO: Add sensor_gpu_temperature - reading from GPU.temperature
     gpu_temperature = 'Sensor GPU Temperature',
-    # TODO: Add sensor_ram
-    sensor_free_ram = 'Sensor RAM',
-    # TODO: Add sensor_storage
-    sensor_storage = 'Sensor Storage',
+    # TODO: Add sensor_free_ram and sensor_total_ram
+    sensor_free_ram = 'Sensor Free RAM',
+    sensor_total_ram = 'Sensor Total RAM',
+    # TODO: Add sensor_free_storage and sensor_total_storage
+    sensor_free_storage = 'Sensor Free Storage',
+    sensor_total_storage = 'Sensor Total Storage',
 
     # create JSON data to send in message payload
     data = json.dumps({
@@ -140,6 +143,11 @@ while True:
         'cpu-temp': 'cpu_temperature',
         'gpu-temperature': 'gpu_temperature',
         'cpu-max-load': sensor_max_load,
+        "gpu_temperature": "gpu_temperature",
+        "sensor-free-ram": "sensor_free_ram",
+        "sensor-total-ram": "sensor_total_ram",
+        "sensor-free-storage": "sensor_free_storage",
+        "sensor-total-storage": "sensor_total_storage",
         'time': str(datetime.datetime.now()),
     })
     client.publish(topic, data)
