@@ -51,7 +51,7 @@ sensor_ip = Network.ip()
 mqtt_sensor_name = f"{sensor_name}-{sensor_serial}"
 
 # TODO: Once this module is working correctly, change update frequency to 60.0s
-update_frequency = 1.0
+update_frequency = 10.0
 
 mqtt.Client.connected_flag = False
 
