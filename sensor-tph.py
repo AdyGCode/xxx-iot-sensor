@@ -123,13 +123,15 @@ def main():
 
         # Create the JSON string to send to the MQTT server
         data = json.dumps({
-            'sensor': mqtt_sensor_name,
-            'temperature': sensehat_temperature,
-            # TODO: pressure reading key-value pair
-            # TODO: humidity reading key-value pair
-            # TODO: accelerometer reading key-value pair
-            # TODO: compass reading key-value pair
-            'time': str(datetime.datetime.now()),
+            'sensehat': {
+                'sensor': mqtt_sensor_name,
+                'temperature': sensehat_temperature,
+                # TODO: pressure reading key-value pair
+                # TODO: humidity reading key-value pair
+                # TODO: accelerometer reading key-value pair
+                # TODO: compass reading key-value pair
+                'time': str(datetime.datetime.now()),
+            },
         })
 
         # Send the topic and data to MQTT Server

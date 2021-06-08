@@ -37,7 +37,7 @@ from piview.Network import Network
 mqtt_server = "127.0.0.1"
 mqtt_port = 1883
 mqtt_time_alive = 60
-# Define the MQTT topic as given below
+# Define the MQTT topic - sensor and server must have same topic
 topic = "NMTAFE/IoT"
 
 #  Get the Pi name, model, revision, serial number, IP and MAC
@@ -75,6 +75,10 @@ def on_connect(client, userdata, flags, rc):
         sensor_ram = 0
         # TODO: Obtain Sensor's Total Storage from piview.Storage
         sensor_storage = 0
+        # TODO: Add sensor_free_ram and sensor_total_ram
+        sensor_total_ram, sensor_free_ram = Storage.ram()
+        # TODO: Add sensor_free_storage and sensor_total_storage
+        #       Check the RAM version for a BIG clue!
         # TODO: Obtain Sensor's I2C Hardware status from piview.Hardware
         sensor_i2c = False
         # TODO: Obtain Sensor's Bluetooth Hardware status from piview.Hardware
@@ -92,19 +96,23 @@ def on_connect(client, userdata, flags, rc):
         #       For example the 'ram' : 0
         #       Should read 'ram' : sensor_ram
         data = json.dumps({
-            'sensor': mqtt_sensor_name,
-            'message': 'connected',
-            'model': 'UNKNOWN',
-            'ip': sensor_ip,
-            'mac': sensor_mac,
-            'boot-time': sensor_boot_time,
-            'ram': 0,
-            'storage': sensor_storage,
-            'hw-i2c': False,
-            'hw-bt': False,
-            'hw-camera': False,
-            'hw-spi': sensor_spi,
-            'time': str(datetime.datetime.now()),
+            "system": {
+                'sensor': mqtt_sensor_name,
+                'message': 'connected',
+                'model': 'UNKNOWN',
+                'ip': sensor_ip,
+                'mac': sensor_mac,
+                'boot-time': sensor_boot_time,
+                "sensor-free-ram": "sensor_free_ram",
+                "sensor-total-ram": "sensor_total_ram",
+                "sensor-free-storage": "sensor_free_storage",
+                "sensor-total-storage": "sensor_total_storage",
+                'hw-i2c': False,
+                'hw-bt': False,
+                'hw-camera': False,
+                'hw-spi': sensor_spi,
+                'time': str(datetime.datetime.now()),
+            }
         })
         client.publish(topic, data)
     else:
@@ -131,24 +139,25 @@ while True:
     # TODO: Add sensor_gpu_temperature - reading from GPU.temperature
     gpu_temperature = 'Sensor GPU Temperature',
     # TODO: Add sensor_free_ram and sensor_total_ram
-    sensor_free_ram = 'Sensor Free RAM',
-    sensor_total_ram = 'Sensor Total RAM',
+    sensor_total_ram, sensor_free_ram = Storage.ram()
     # TODO: Add sensor_free_storage and sensor_total_storage
-    sensor_free_storage = 'Sensor Free Storage',
-    sensor_total_storage = 'Sensor Total Storage',
+    #       Check the RAM version for a BIG clue!
+    sensor_total_storage, sensor_total_storage = (0,0)
 
     # create JSON data to send in message payload
     data = json.dumps({
-        'sensor': mqtt_sensor_name,
-        'cpu-temp': 'cpu_temperature',
-        'gpu-temperature': 'gpu_temperature',
-        'cpu-max-load': sensor_max_load,
-        "gpu_temperature": "gpu_temperature",
-        "sensor-free-ram": "sensor_free_ram",
-        "sensor-total-ram": "sensor_total_ram",
-        "sensor-free-storage": "sensor_free_storage",
-        "sensor-total-storage": "sensor_total_storage",
-        'time': str(datetime.datetime.now()),
+        'system': {
+            'sensor': mqtt_sensor_name,
+            'cpu-temp': 'cpu_temperature',
+            'gpu-temperature': 'gpu_temperature',
+            'cpu-max-load': sensor_max_load,
+            "gpu_temperature": "gpu_temperature",
+            "sensor-free-ram": "sensor_free_ram",
+            "sensor-total-ram": "sensor_total_ram",
+            "sensor-free-storage": "sensor_free_storage",
+            "sensor-total-storage": "sensor_total_storage",
+            'time': str(datetime.datetime.now()),
+        }
     })
     client.publish(topic, data)
     print(f"Published {topic} : {data}")
