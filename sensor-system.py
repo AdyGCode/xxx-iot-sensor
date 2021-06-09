@@ -146,7 +146,7 @@ while True:
 
     # create JSON data to send in message payload
     data = json.dumps({
-        'system': {
+        'sensehat': {
             'sensor': mqtt_sensor_name,
             'cpu-temp': 'cpu_temperature',
             'gpu-temperature': 'gpu_temperature',
