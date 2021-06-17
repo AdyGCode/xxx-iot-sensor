@@ -13,7 +13,8 @@ This code base is not complete, but **no** contributions are required.
 ## Features
 
 * Built-in Hardware Sensor (Raspberry Pi) details monitored and delivered via MQTT
-* Temperature, pressure and humidity and other sensor inputs monitored and delivered via MQTT
+* SenseHAT Temperature, pressure and humidity and other sensor inputs monitored and delivered 
+  via MQTT
 
 ## Requirements
 
@@ -29,10 +30,12 @@ similar, will need to be created, or installed from the required suppliers.
 
 ### Software
 
-MQTT Server
+### MQTT Server
 
 - anonymous access allowed for this simple example
 - default port is 1883
+
+Install using : `sudo apt-get update` followed by `sudo apt-get install mosquitto`
 
 ### Package Requirements
 

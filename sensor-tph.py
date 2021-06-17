@@ -27,8 +27,10 @@ def main():
     import time
 
     import paho.mqtt.client as mqtt
+    # TODO: Remember to import the piview Storage, Hardware,
     from piview.Host import Host
     from piview.Network import Network
+    from sense_hat import SenseHat
 
     # MQTT Server details
     mqtt_server = "127.0.0.1"  # Default to local machine
@@ -52,6 +54,16 @@ def main():
     mqtt.Client.connected_flag = False
 
     def on_connect(client, userdata, flags, rc):
+        ''' Write the purpose of the method here...
+        TODO: Fill out the purpose of this method, and add descriptions to
+              the parameters
+
+        :param client:
+        :param userdata:
+        :param flags:
+        :param rc:
+        :return:
+        '''
         if rc == 0:
             print("connected OK Returned code=", rc)
             client.connected_flag = True
@@ -59,38 +71,46 @@ def main():
             #       a variable and then make sure the data is inserted into the
             #       dictionary as shown for the sensor_ip
             sensor_ip = Network.ip()
-            # TODO: Add a variable (as defined below) and retrieve the
+            # TODO: Add variables (as defined below) and retrieve the
             #  required details for the Pi using the piview package for
             #  each of the following:
-            #       boot_time
+            #       boot_time =
             #       sensor_ram = Storage.ram()
-            #           ram_total
-            #           ram_free
-            #           storage
-            #           storage_total
-            #           storage_free
+            #       ram_total =
+            #       ram_free =
+            #       The storage is for the disk/disc.
+            #       storage =
+            #       storage_total =
+            #       storage_free =
             #       hw_i2c = Hardware.i2c()
-            #           hw_bt
-            #           hw_camera
-            #           hw_spi
+            #       hw_bt =
+            #       hw_camera =
+            #       hw_spi =
+            # TODO: Remember that the ram() method returns a TUPLE and must
+            #       be split into the ram_total and ram_free values
+            #       Check the documentation at https://piview.readthedocs.io
 
             # Create the data payload to send as the message to the MQTT server
             # TODO: Remember to replace the 'UNKNOWN', 'False' etc with the
             #       correct newly created variable as given above
             data = json.dumps({
-                'sensor': mqtt_sensor_name,
-                'message': 'connected',
-                'model': 'UNKNOWN',
-                'ip': sensor_ip,
-                'mac': sensor_mac,
-                'boot-time': '0000-00-00 00:00:00.0',
-                'ram': 0,
-                'storage': 0,
-                'hw-i2c': False,
-                'hw-bt': False,
-                'hw-camera': False,
-                'hw-spi': False,
-                'time': str(datetime.datetime.now())
+                'system': {
+                    'sensor': mqtt_sensor_name,
+                    'message': 'connected',
+                    'model': 'UNKNOWN',
+                    'ip': sensor_ip,
+                    'mac': sensor_mac,
+                    'boot-time': '0000-00-00 00:00:00.0',
+                    'sensor-free-ram': 0,
+                    'sensor-total-ram': 0,
+                    'sensor-free-storage': 0,
+                    'sensor-total-storage': 0,
+                    'hw-i2c': False,
+                    'hw-bt': False,
+                    'hw-camera': False,
+                    'hw-spi': False,
+                    'time': str(datetime.datetime.now()),
+                },
             })
             client.publish(topic, data)
         else:
@@ -109,13 +129,19 @@ def main():
     while not client.connected_flag:  # wait in loop
         time.sleep(1)
 
+    # Initialise the sensehat variable with a new "SenseHAT"
+    sensehat = SenseHat()
+
     # a short delay before getting first readings
     time.sleep(1)
 
     while True:
         # TODO: Create the code to give readings for each of the SenseHat
         #       sensors listed below. Replace the strings as needed.
-        sensehat_temperature = 'SenseHat Temperature Reading'
+        #       Refer to https://projects.raspberrypi.org/en/projects/getting
+        #       -started-with-the-sense-hat
+        #       For more information / revision
+        sensehat_temperature = sensehat.temperature()
         sensehat_pressure = 'SenseHat Pressure Reading'
         sensehat_humidity = 'SenseHat Humidity Reading'
         sensehat_accelerometer = 'SenseHat Accelerometer Reading'

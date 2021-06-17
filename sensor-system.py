@@ -27,6 +27,8 @@ import json
 import time
 
 import paho.mqtt.client as mqtt
+from piview.Hardware import Hardware
+from piview.Storage import Storage
 from piview.CPU import CPU
 from piview.Host import Host
 from piview.Network import Network
@@ -51,7 +53,7 @@ sensor_ip = Network.ip()
 mqtt_sensor_name = f"{sensor_name}-{sensor_serial}"
 
 # TODO: Once this module is working correctly, change update frequency to 60.0s
-update_frequency = 10.0
+update_frequency = 1.0
 
 mqtt.Client.connected_flag = False
 
@@ -72,7 +74,7 @@ def on_connect(client, userdata, flags, rc):
         print("connected OK Returned code=", rc)
         client.connected_flag = True
         # TODO: Obtain Sensor's Total RAM from piview.Storage
-        sensor_ram = 0
+        sensor_ram = Storage.ram()
         # TODO: Obtain Sensor's Total Storage from piview.Storage
         sensor_storage = 0
         # TODO: Add sensor_free_ram and sensor_total_ram
@@ -80,7 +82,7 @@ def on_connect(client, userdata, flags, rc):
         # TODO: Add sensor_free_storage and sensor_total_storage
         #       Check the RAM version for a BIG clue!
         # TODO: Obtain Sensor's I2C Hardware status from piview.Hardware
-        sensor_i2c = False
+        sensor_i2c = Hardware.i2c()
         # TODO: Obtain Sensor's Bluetooth Hardware status from piview.Hardware
         sensor_bt = False
         # TODO: Obtain Sensor's Camera Hardware status from piview.Hardware
@@ -103,7 +105,7 @@ def on_connect(client, userdata, flags, rc):
                 'ip': sensor_ip,
                 'mac': sensor_mac,
                 'boot-time': sensor_boot_time,
-                "sensor-free-ram": "sensor_free_ram",
+                "sensor-free-ram": sensor_free_ram,
                 "sensor-total-ram": "sensor_total_ram",
                 "sensor-free-storage": "sensor_free_storage",
                 "sensor-total-storage": "sensor_total_storage",
